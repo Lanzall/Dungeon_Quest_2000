@@ -6,11 +6,12 @@
 #include "Player.h"
 #include "Goblin.h"
 #include "DungeonGame.h"
+#include "Enums.h"
 
 using namespace std;
 
-const int resX = 1027;
-const int resY = 768;
+const int resX = 1000;
+const int resY = 1000;
 const int GridSizeX = 10;
 const int GridSizeY = 10;
 const float TileSize = resY / GridSizeX;
@@ -120,7 +121,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     SDL_RenderClear(renderer);  /* start with a blank canvas. */
 
     // Your Update code goes here.
-    SDL_RenderTexture(renderer, heroTexture, NULL, &heroRect);
+    SDL_RenderTexture(renderer, Game->Hero->Texture, NULL, &heroRect);
     
 
     SDL_RenderPresent(renderer);  /* put it all on the screen! */
