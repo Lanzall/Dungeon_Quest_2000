@@ -21,6 +21,10 @@ void DungeonGame::LoadTextures(SDL_Renderer* renderer)
 	SDL_SetTextureScaleMode(this->Hero->Texture, SDL_SCALEMODE_NEAREST);
 }
 
+void DungeonGame::Update(double dt)
+{
+}
+
 
 void LoadRoom(char* filename)
 {
@@ -41,15 +45,7 @@ void LoadRoom(char* filename)
 	}
 }
 
-Tile* GetNeighbour(int currentX, int currentY, Direction dir)
-{
-	if (dir == Direction::North && currentY > 0)
-	{
-		return TileGrid[currentX][currentY - 1];
 
-	}
-	// follow the pattern for other directions
-}
 
 const int numRoomsX = 10;
 const int numRoomsY = 10;

@@ -9,8 +9,12 @@
 
 const static std::string path_Hero = "Textures/Hero_sword.png";
 
+const static int RoomSize = 10;
 const int roomWidth = 10;	// number of tiles in a room
 const int roomHeight = 10;
+const int overlandWidth = 10;
+const int overlandHeight = 10;
+
 
 class DungeonGame
 {
@@ -20,6 +24,13 @@ public:
 	void LoadTextures(SDL_Renderer* renderer);
 	Player* Hero;
 	Tile TileGrid[roomWidth][roomHeight];
+
+	void Update(double dt);
+
+	Tile* NorthNeighbour;
+	Tile* EastNeighbour;
+	Tile* SouthNeighbour;
+	Tile* WestNeighbour;
 
 private:
 	float tileSizeX;

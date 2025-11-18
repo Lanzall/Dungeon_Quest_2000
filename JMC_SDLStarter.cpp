@@ -16,7 +16,8 @@ const int GridSizeX = 10;
 const int GridSizeY = 10;
 const float TileSize = resY / GridSizeX;
 
-
+static Uint64 now;
+static Uint64 last;
 
 // The hero image
 static const char* heroPath = "Textures/Hero_no_sword.png";
@@ -115,6 +116,10 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 SDL_AppResult SDL_AppIterate(void* appstate)
 {
 
+    last = now;
+    now = SDL_GetPerformanceCounter();
+    double deltaTime = (double)((now - last) / (double)SDL_GetPerformanceFrequency());
+    Game->Update(deltaTime);
 
     /* as you can see from this, rendering draws over whatever was drawn before it. */
     SDL_SetRenderDrawColor(renderer, 33, 33, 33, SDL_ALPHA_OPAQUE);  /* dark gray, full alpha */
@@ -125,6 +130,9 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     
 
     SDL_RenderPresent(renderer);  /* put it all on the screen! */
+
+
+
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
