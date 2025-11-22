@@ -11,6 +11,7 @@ public:
 	~MoveResult();
 	Tile* GetTile();
 	void SetAction(MoveResultAction a);
+	MoveResultAction GetAction();
 private:
 	MoveResultAction action;
 	GameCharacter* character;

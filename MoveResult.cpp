@@ -1,6 +1,6 @@
 #include "MoveResult.h"
 
-MoveResult::MoveResult()
+MoveResult::MoveResult()		// always gives me a warning that it's uninitialized, not sure what the best way to fix it is
 {
 }
 
@@ -23,4 +23,9 @@ Tile* MoveResult::GetTile()
 
 void MoveResult::SetAction(MoveResultAction a)
 {
+}
+
+MoveResultAction MoveResult::GetAction()
+{
+	return MoveResultAction();		// return default value?
 }

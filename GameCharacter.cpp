@@ -1,4 +1,5 @@
 #include "GameCharacter.h"
+#include "Enums.h"
 
 GameCharacter::GameCharacter()
 {
@@ -27,6 +28,26 @@ void GameCharacter::Collect(Pickup& pickup)
 bool GameCharacter::CanMoveBetweenRooms()
 {
 	return false;
+}
+
+void GameCharacter::Move(Direction dir, int dist)		// moves the character in a direction by a distance
+{
+	if (dir == Direction::North)
+	{
+		Rect.y -= dist;
+	}
+	else if (dir == Direction::East)
+	{
+		Rect.x += dist;
+	}
+	else if (dir == Direction::South)
+	{
+		Rect.y += dist;
+	}
+	else if (dir == Direction::West)
+	{
+		Rect.x -= dist;
+	}
 }
 
 bool GameCharacter::GetIsAlive()

@@ -10,14 +10,15 @@
 
 using namespace std;
 
-const int resX = 1000;
+const int resX = 1000;      // Screen resolution for X (below is Y)
 const int resY = 1000;
-const int GridSizeX = 10;
+const int GridSizeX = 10;       // The grid size of the tiles
 const int GridSizeY = 10;
-const float TileSize = resY / GridSizeX;
+const float TileSize = resY / GridSizeX;        // The size of each tile in pixels
 
 static Uint64 now;
 static Uint64 last;
+
 
 // The hero image
 static const char* heroPath = "Textures/Hero_no_sword.png";
@@ -67,10 +68,10 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
         return SDL_APP_FAILURE;
     }
 
-    Game = new DungeonGame(TileSize, TileSize);
-    Game->LoadTextures(renderer);
+	Game = new DungeonGame(TileSize, TileSize);     // create the game instance
+	Game->LoadTextures(renderer);       // load the textures
 
-
+	const char* room = "Data/Rooms/Room05.bmp";     // loads the room data from a bitmap (in this case room 5)
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -84,22 +85,22 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
     
     if (event->type == SDL_EVENT_KEY_DOWN)
     {
-        // keyboard events    
+		// keyboard events, checks what key was pressed and uses HandleMoveDirection to move the hero    
         if (event->key.scancode == SDL_SCANCODE_W)
         {
-            Game->Hero->Rect.y -= TileHeight;
+			Game->HandleMoveDirection(*Game->Hero, Direction::North);
         }
         if (event->key.scancode == SDL_SCANCODE_S)
         {
-            Game->Hero->Rect.y += TileHeight;
+            Game->HandleMoveDirection(*Game->Hero, Direction::South);
         }
         if (event->key.scancode == SDL_SCANCODE_A)
         {
-            Game->Hero->Rect.x -= TileWidth;
+            Game->HandleMoveDirection(*Game->Hero, Direction::West);
         }
         if (event->key.scancode == SDL_SCANCODE_D)
         {
-            Game->Hero->Rect.x += TileWidth;
+            Game->HandleMoveDirection(*Game->Hero, Direction::East);
         }
 
     }
@@ -126,7 +127,18 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     SDL_RenderClear(renderer);  /* start with a blank canvas. */
 
     // Your Update code goes here.
-    SDL_RenderTexture(renderer, Game->Hero->Texture, NULL, &heroRect);
+
+	//Draws the tiles or grid whichever you prefer
+    for (int x = 0; x < GridSizeX; x++)
+    {
+        for (int y = 0; y < GridSizeY; y++)
+        {
+			SDL_RenderTexture(renderer, Game->Tiles[x][y].Texture, NULL, &Game->Tiles[x][y].Rect);
+        }
+    }
+
+
+	SDL_RenderTexture(renderer, Game->Hero->Texture, NULL, &heroRect);      // draw the hero
     
 
     SDL_RenderPresent(renderer);  /* put it all on the screen! */
@@ -143,4 +155,4 @@ void SDL_AppQuit(void* appstate, SDL_AppResult result)
     delete Game;
     /* SDL will clean up the window/renderer for us. */
 }
-
+// The kids would say I'm cooking the way I can write spaghetti code
